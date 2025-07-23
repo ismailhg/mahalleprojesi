@@ -1,54 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+  --green-start: #22c55e;
+  --green-mid: #16a34a;
+  --green-end: #15803d;
+  --white-glass: rgba(255, 255, 255, 0.2);
+  --white-border: rgba(255, 255, 255, 0.3);
+  --blur: blur(10px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 .site-header {
-  background-color: #663399;
-  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--green-start), var(--green-mid), var(--green-end));
+  padding: 14px 28px;
   color: white;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 22px;
+  color: white;
+  text-decoration: none;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* ALT ÇİZGİYİ KALDIR */
+}
+
+.logo-image {
+  height: 40px; /* isteğe göre ayarlayabilirsin */
+  margin-right: 8px;
+}
+
+.logo-text {
+  color: white;       /* YAZIYI BEYAZ YAP */
+  font-size: 24px;    /* isteğe göre büyüt/küçült */
   font-weight: bold;
-  font-size: 24px;
-  flex: 1;
+  text-decoration: none; /* ALT ÇİZGİ YOK */
 }
 
 .menu-toggle {
   display: none;
   font-size: 28px;
   cursor: pointer;
+  color: white;
+  background: none;
+  border: none;
 }
 
 .nav-links {
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  align-items: center;
 }
 
 .nav-button {
+  padding: 10px 18px;
+  font-size: 14px;
   color: white;
-  background-color: #805ad5;
-  padding: 6px 14px;
-  border-radius: 4px;
   text-decoration: none;
-  font-weight: 500;
-  transition: background 0.2s ease;
-  border: none;
-  cursor: pointer;
+  border-radius: 8px;
+  background: var(--white-glass);
+  border: 1px solid var(--white-border);
+  backdrop-filter: var(--blur);
+  transition: 0.3s ease;
+  position: relative;
 }
 
 .nav-button:hover {
-  background-color: #9f7aea;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 
-/* Mobil görünüm */
+.logout-btn {
+  background: linear-gradient(to right, #dc2626, #b91c1c);
+  border: none;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(to right, #b91c1c, #991b1b);
+}
+
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -56,9 +110,16 @@
 
   .nav-links {
     display: none;
-    flex-direction: column;
+    position: absolute;
+    top: 110%;
+    left: 0;
     width: 100%;
-    margin-top: 10px;
+    flex-direction: column;
+    background: linear-gradient(135deg, var(--green-start), var(--green-mid), var(--green-end));
+    padding: 16px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    animation: slideDown 0.3s ease-out;
   }
 
   .nav-links.open {
@@ -67,6 +128,24 @@
 
   .nav-button {
     width: 100%;
-    text-align: left;
+    margin-bottom: 8px;
+    font-size: 16px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .nav-button:last-child {
+    margin-bottom: 0;
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 }

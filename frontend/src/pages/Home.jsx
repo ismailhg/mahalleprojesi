@@ -16,10 +16,10 @@ const Home = () => {
   const [konum, setKonum] = useState({ ilId: "", ilceId: "", mahalleId: "" });
 
   useEffect(() => {
-    const id = parseInt(localStorage.getItem("userId"));
+    const id = Number(localStorage.getItem("userId"));
     const ad = localStorage.getItem("userAd");
 
-    if (!id || !ad) {
+    if (!id || isNaN(id) || !ad) {
       alert("Yorum gönderebilmek için giriş yapmalısınız.");
       window.location.href = "/login";
       return;
@@ -105,6 +105,7 @@ const Home = () => {
       setYeniYorum("");
       setKonum({ ilId: "", ilceId: "", mahalleId: "" });
       setSeciliKategori("market");
+      setAktifKategori("market");
     } catch (error) {
       console.error("Yorum gönderilemedi:", error.message);
       alert("Yorum gönderilemedi.");
@@ -115,9 +116,12 @@ const Home = () => {
     (yorum) => yorum.kategori?.toLowerCase() === aktifKategori.toLowerCase()
   );
 
+  const formatCategory = (category) => {
+    return category[0].toLocaleUpperCase("tr-TR") + category.slice(1);
+  };
+
   return (
     <div className="home-container">
-      {/* Kategoriler */}
       <div className="sidebar">
         <h4>Kategoriler</h4>
         <ul className="category-list">
@@ -127,20 +131,21 @@ const Home = () => {
               className={cat === aktifKategori ? "active" : ""}
               onClick={() => setAktifKategori(cat)}
             >
-              {cat}
+              {formatCategory(cat)}
             </li>
           ))}
         </ul>
       </div>
 
-      {/* İçerik alanı */}
       <div className="content-area">
-        <h3>{aktifKategori}</h3>
+        <h3>{formatCategory(aktifKategori)}</h3>
+        <p className="sub-heading">
+          {aktifKategori} hakkında deneyimlerinizi paylaşın ve diğer kullanıcıların yorumlarını okuyun.
+        </p>
 
-        {/* Form */}
         <div className="yorum-form">
           <textarea
-            placeholder="Yorumunuzu yazın"
+            placeholder="Deneyiminizi detaylı bir şekilde paylaşın..."
             value={yeniYorum}
             onChange={(e) => setYeniYorum(e.target.value)}
           />
@@ -199,31 +204,46 @@ const Home = () => {
           >
             {categories.map((cat) => (
               <option key={cat} value={cat}>
-                {cat}
+                {formatCategory(cat)}
               </option>
             ))}
           </select>
 
-          <button onClick={yorumGonder}>Yorum Gönder</button>
+          <button onClick={yorumGonder}>Yorumu Paylaş</button>
         </div>
 
-        {/* Yorumlar */}
         <div className="entry-list">
           {loading ? (
-            <p>Yükleniyor...</p>
+            <div className="loading-state">
+              <p>Yorumlar yükleniyor...</p>
+            </div>
           ) : secilenYorumlar.length > 0 ? (
             secilenYorumlar.map((entry) => (
               <div key={entry.id} className="entry-card">
-                <p>{entry.icerik}</p>
+                <div className="entry-header">
+                  <strong>{entry.User?.ad || "Anonim"}</strong>
+                  <span className="entry-location">
+                    {entry.yorumIl?.il_adi} / {entry.yorumIlce?.ilce_adi} / {entry.yorumMahalle?.mahalle_adi}
+                  </span>
+                </div>
+                <p className="entry-text">{entry.icerik}</p>
                 <div className="entry-meta">
-                  — {entry.User?.ad} ({entry.yorumIl?.il_adi} /{" "}
-                  {entry.yorumIlce?.ilce_adi} /{" "}
-                  {entry.yorumMahalle?.mahalle_adi})
+                  {new Date(entry.createdAt).toLocaleDateString("tr-TR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </div>
               </div>
             ))
           ) : (
-            <p>Bu kategoriye ait henüz yorum yok.</p>
+            <div className="empty-state">
+              <p>Bu kategoriye ait henüz yorum bulunmuyor.</p>
+              <p>İlk yorumu siz yazarak başlayabilirsiniz!</p>
+              
+            </div>
           )}
         </div>
       </div>

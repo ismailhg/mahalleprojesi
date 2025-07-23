@@ -24,13 +24,11 @@ const Login = () => {
       }
 
       const data = await res.json();
-
-      // Kullanıcı bilgilerini localStorage'a kaydet
       localStorage.setItem("userId", data.id);
       localStorage.setItem("userAd", data.ad);
 
       alert("Giriş başarılı!");
-      navigate("/home"); // Giriş sonrası ana sayfaya yönlendir
+      navigate("/home");
     } catch (error) {
       alert("Giriş sırasında bir hata oluştu.");
       console.error(error);

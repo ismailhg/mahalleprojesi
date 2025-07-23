@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./header.css";
+import logoImage from "./mahallelogo.png";
 
 const Header = () => {
   const userId = localStorage.getItem("userId");
@@ -19,7 +20,18 @@ const Header = () => {
   return (
     <header className="site-header">
       <div className="container">
-        <div className="logo">🌐 Mahallem</div>
+        <div className="logo">
+          <Link to="/home" onClick={toggleMenu} className="logo-link">
+            <img 
+              src={logoImage} 
+              alt="Mahallem Logo" 
+              className="logo-image"
+            />
+            <span className="logo-text">Mahalle</span>
+          </Link>
+        </div>
+
+
         <div className="menu-toggle" onClick={toggleMenu}>
           ☰
         </div>
