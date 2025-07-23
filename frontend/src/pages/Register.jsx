@@ -1,3 +1,4 @@
+import "./login.css"; // login ve register için ortak CSS
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

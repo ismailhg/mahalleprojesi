@@ -1,31 +1,34 @@
-/* ✅ home.css */
-
 .home-container {
   display: flex;
+  flex-direction: row;
   font-family: Arial, sans-serif;
   padding: 20px;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .sidebar {
-  width: 200px;
-  border-right: 1px solid #ddd;
-  padding-right: 15px;
+  width: 220px;
+  min-width: 180px;
+  border-right: 2px solid #eee;
 }
 
 .category-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .category-list li {
-  padding: 8px 10px;
+  padding: 10px 14px;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 6px;
+  margin-bottom: 8px;
   transition: background 0.2s ease;
 }
 
 .category-list li:hover {
-  background-color: #f0f0f0;
+  background-color: #f5f5f5;
 }
 
 .category-list li.active {
@@ -36,35 +39,43 @@
 
 .content-area {
   flex: 1;
-  padding-left: 20px;
+  min-width: 300px;
 }
 
 .yorum-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
   margin-bottom: 30px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 textarea {
   resize: vertical;
-  height: 80px;
-  padding: 8px;
+  min-height: 80px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
 select,
 textarea {
   font-size: 16px;
-  padding: 6px;
+  padding: 8px;
 }
 
 button {
   background-color: #28a745;
   color: white;
-  padding: 10px;
+  padding: 10px 12px;
   border: none;
   cursor: pointer;
   font-weight: bold;
+  border-radius: 4px;
+  transition: background 0.3s ease;
 }
 
 button:hover {
@@ -74,18 +85,52 @@ button:hover {
 .entry-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16px;
 }
 
 .entry-card {
-  border: 1px solid #ccc;
-  padding: 12px;
-  border-radius: 6px;
-  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .entry-meta {
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 14px;
-  color: #555;
+  color: #666;
+  font-style: italic;
+}
+
+/* 📱 Mobil uyum */
+@media (max-width: 768px) {
+  .home-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 20px;
+  }
+
+  .category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .category-list li {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+    /* MahallemPage özelleştirmesi */
+  .content-area h3::after {
+    content: " 🏘️";
+    font-size: 18px;
+  }
+
 }
