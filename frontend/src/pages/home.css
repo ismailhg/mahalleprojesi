@@ -1,0 +1,91 @@
+/* ✅ home.css */
+
+.home-container {
+  display: flex;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.sidebar {
+  width: 200px;
+  border-right: 1px solid #ddd;
+  padding-right: 15px;
+}
+
+.category-list {
+  list-style: none;
+  padding: 0;
+}
+
+.category-list li {
+  padding: 8px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.category-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.category-list li.active {
+  background-color: #663399;
+  color: white;
+  font-weight: bold;
+}
+
+.content-area {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.yorum-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+textarea {
+  resize: vertical;
+  height: 80px;
+  padding: 8px;
+}
+
+select,
+textarea {
+  font-size: 16px;
+  padding: 6px;
+}
+
+button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+.entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.entry-card {
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.entry-meta {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #555;
+}
