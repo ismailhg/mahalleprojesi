@@ -19,21 +19,19 @@ const Profile = () => {
   const [mahalleler, setMahalleler] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [message, setMessage] = useState({ type: '', text: '' });
+  const [message, setMessage] = useState({ type: "", text: "" });
 
   const userId = localStorage.getItem("userId");
 
-  // Clear message after 5 seconds
   useEffect(() => {
     if (message.text) {
       const timer = setTimeout(() => {
-        setMessage({ type: '', text: '' });
+        setMessage({ type: "", text: "" });
       }, 5000);
       return () => clearTimeout(timer);
     }
   }, [message]);
 
-  // Kullanıcı verisini getir
   useEffect(() => {
     if (!userId) {
       navigate("/login");
@@ -54,46 +52,44 @@ const Profile = () => {
         setLoading(false);
       })
       .catch((err) => {
-        setMessage({ type: 'error', text: 'Kullanıcı verisi alınamadı.' });
+        setMessage({ type: "error", text: "Kullanıcı verisi alınamadı." });
         console.error(err);
         setLoading(false);
       });
   }, [userId, navigate]);
 
-  // İl listesini getir
   useEffect(() => {
     fetch("/api/location/iller")
       .then((res) => res.json())
       .then(setIller)
-      .catch(() => setMessage({ type: 'error', text: 'İller alınamadı.' }));
+      .catch(() => setMessage({ type: "error", text: "İller alınamadı." }));
   }, []);
 
-  // İl değişince ilçeleri getir
   useEffect(() => {
     if (userData.il_id) {
       fetch(`/api/location/ilceler?ilId=${userData.il_id}`)
         .then((res) => res.json())
         .then(setIlceler)
-        .catch(() => setMessage({ type: 'error', text: 'İlçeler alınamadı.' }));
+        .catch(() => setMessage({ type: "error", text: "İlçeler alınamadı." }));
     } else {
       setIlceler([]);
       setMahalleler([]);
     }
   }, [userData.il_id]);
 
-  // İlçe değişince mahalleleri getir
   useEffect(() => {
     if (userData.ilce_id) {
       fetch(`/api/location/mahalleler?ilceId=${userData.ilce_id}`)
         .then((res) => res.json())
         .then(setMahalleler)
-        .catch(() => setMessage({ type: 'error', text: 'Mahalleler alınamadı.' }));
+        .catch(() =>
+          setMessage({ type: "error", text: "Mahalleler alınamadı." })
+        );
     } else {
       setMahalleler([]);
     }
   }, [userData.ilce_id]);
 
-  // Form input değişimi
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData((prev) => ({
@@ -104,23 +100,24 @@ const Profile = () => {
     }));
   };
 
-  // Form submit ile güncelle
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage({ type: "", text: "" });
 
-    // Clear previous messages
-    setMessage({ type: '', text: '' });
-
-    // Basit validation
     if (!userData.ad || !userData.soyad || !userData.email) {
-      setMessage({ type: 'error', text: 'Lütfen tüm zorunlu alanları doldurun.' });
+      setMessage({
+        type: "error",
+        text: "Lütfen tüm zorunlu alanları doldurun.",
+      });
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(userData.email)) {
-      setMessage({ type: 'error', text: 'Lütfen geçerli bir e-posta adresi girin.' });
+      setMessage({
+        type: "error",
+        text: "Lütfen geçerli bir e-posta adresi girin.",
+      });
       return;
     }
 
@@ -138,9 +135,9 @@ const Profile = () => {
         throw new Error(errData.error || "Güncelleme başarısız.");
       }
 
-      setMessage({ type: 'success', text: 'Bilgiler başarıyla güncellendi!' });
+      setMessage({ type: "success", text: "Bilgiler başarıyla güncellendi!" });
     } catch (error) {
-      setMessage({ type: 'error', text: error.message });
+      setMessage({ type: "error", text: error.message });
       console.error(error);
     } finally {
       setSubmitting(false);
@@ -148,14 +145,13 @@ const Profile = () => {
   };
 
   const getSelectedLocationNames = () => {
-    const il = iller.find(i => i.id == userData.il_id);
-    const ilce = ilceler.find(i => i.id == userData.ilce_id);
-    const mahalle = mahalleler.find(m => m.id == userData.mahalle_id);
-    
+    const il = iller.find((i) => i.id == userData.il_id);
+    const ilce = ilceler.find((i) => i.id == userData.ilce_id);
+    const mahalle = mahalleler.find((m) => m.id == userData.mahalle_id);
     return {
-      il: il?.ad || '',
-      ilce: ilce?.ad || '',
-      mahalle: mahalle?.ad || ''
+      il: il?.ad || "",
+      ilce: ilce?.ad || "",
+      mahalle: mahalle?.ad || "",
     };
   };
 
@@ -190,10 +186,12 @@ const Profile = () => {
         )}
 
         {message.text && (
-          <div className={message.type === 'success' ? 'success-message' : 'error-message'}>
-            <span>
-              {message.type === 'success' ? '✓' : '⚠'}
-            </span>
+          <div
+            className={
+              message.type === "success" ? "success-message" : "error-message"
+            }
+          >
+            <span>{message.type === "success" ? "✓" : "⚠"}</span>
             {message.text}
           </div>
         )}
@@ -201,10 +199,12 @@ const Profile = () => {
         <form className="profile-form" onSubmit={handleSubmit}>
           <div className="form-section">
             <h3 className="section-title">Kişisel Bilgiler</h3>
-            
+
             <div className="form-row">
               <div className="form-group">
-                <label className="form-label" htmlFor="ad">Ad *</label>
+                <label className="form-label" htmlFor="ad">
+                  Ad *
+                </label>
                 <input
                   id="ad"
                   name="ad"
@@ -215,9 +215,11 @@ const Profile = () => {
                   required
                 />
               </div>
-              
+
               <div className="form-group">
-                <label className="form-label" htmlFor="soyad">Soyad *</label>
+                <label className="form-label" htmlFor="soyad">
+                  Soyad *
+                </label>
                 <input
                   id="soyad"
                   name="soyad"
@@ -231,7 +233,9 @@ const Profile = () => {
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="email">E-posta Adresi *</label>
+              <label className="form-label" htmlFor="email">
+                E-posta Adresi *
+              </label>
               <input
                 id="email"
                 name="email"
@@ -249,21 +253,24 @@ const Profile = () => {
 
           <div className="form-section">
             <h3 className="section-title">Konum Bilgileri</h3>
-            
+
             <div className="location-section">
               <div className="location-info">
                 <span>📍</span>
                 <span>
-                  {locationNames.il && locationNames.ilce && locationNames.mahalle
+                  {locationNames.il &&
+                  locationNames.ilce &&
+                  locationNames.mahalle
                     ? `${locationNames.il} / ${locationNames.ilce} / ${locationNames.mahalle}`
-                    : 'Konum bilginizi tamamlayın'
-                  }
+                    : "Konum bilginizi tamamlayın"}
                 </span>
               </div>
 
               <div className="location-grid">
                 <div className="form-group">
-                  <label className="form-label" htmlFor="il_id">İl</label>
+                  <label className="form-label" htmlFor="il_id">
+                    İl
+                  </label>
                   <select
                     id="il_id"
                     name="il_id"
@@ -281,7 +288,9 @@ const Profile = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label" htmlFor="ilce_id">İlçe</label>
+                  <label className="form-label" htmlFor="ilce_id">
+                    İlçe
+                  </label>
                   <select
                     id="ilce_id"
                     name="ilce_id"
@@ -300,7 +309,9 @@ const Profile = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label" htmlFor="mahalle_id">Mahalle</label>
+                  <label className="form-label" htmlFor="mahalle_id">
+                    Mahalle
+                  </label>
                   <select
                     id="mahalle_id"
                     name="mahalle_id"
@@ -322,30 +333,9 @@ const Profile = () => {
           </div>
 
           <div className="submit-section">
-            <button 
-              type="submit" 
-              disabled={submitting}
-            >
-              {submitting ? 'Güncelleniyor...' : 'Bilgilerimi Güncelle'}
+            <button type="submit" disabled={submitting}>
+              {submitting ? "Güncelleniyor..." : "Bilgilerimi Güncelle"}
             </button>
-            
-            <div className="profile-actions">
-              <button
-                type="button"
-                className="secondary-button"
-                onClick={() => navigate('/home')}
-              >
-                ← Ana Sayfaya Dön
-              </button>
-              
-              <button
-                type="button"
-                className="secondary-button"
-                onClick={() => window.location.reload()}
-              >
-                🔄 Formu Sıfırla
-              </button>
-            </div>
           </div>
         </form>
       </div>

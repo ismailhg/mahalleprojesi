@@ -1,165 +1,268 @@
-import "./login.css"; // login ve register için ortak CSS
+import "./profile.css"; // Profile stilini ortak kullandık
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [ad, setAd] = useState("");
-  const [soyad, setSoyad] = useState("");
-  const [email, setEmail] = useState("");
-  const [sifre, setSifre] = useState("");
+  const [form, setForm] = useState({
+    ad: "",
+    soyad: "",
+    email: "",
+    sifre: "",
+    il_id: "",
+    ilce_id: "",
+    mahalle_id: "",
+  });
   const [iller, setIller] = useState([]);
   const [ilceler, setIlceler] = useState([]);
   const [mahalleler, setMahalleler] = useState([]);
-  const [konum, setKonum] = useState({ ilId: "", ilceId: "", mahalleId: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState({ type: "", text: "" });
   const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/api/location/iller")
       .then((res) => res.json())
-      .then(setIller);
+      .then(setIller)
+      .catch(() => setMessage({ type: "error", text: "İller alınamadı." }));
   }, []);
 
   useEffect(() => {
-    if (konum.ilId) {
-      fetch(`/api/location/ilceler?ilId=${konum.ilId}`)
+    if (form.il_id) {
+      fetch(`/api/location/ilceler?ilId=${form.il_id}`)
         .then((res) => res.json())
-        .then(setIlceler);
+        .then(setIlceler)
+        .catch(() => setMessage({ type: "error", text: "İlçeler alınamadı." }));
+    } else {
+      setIlceler([]);
+      setMahalleler([]);
     }
-  }, [konum.ilId]);
+  }, [form.il_id]);
 
   useEffect(() => {
-    if (konum.ilceId) {
-      fetch(`/api/location/mahalleler?ilceId=${konum.ilceId}`)
+    if (form.ilce_id) {
+      fetch(`/api/location/mahalleler?ilceId=${form.ilce_id}`)
         .then((res) => res.json())
-        .then(setMahalleler);
+        .then(setMahalleler)
+        .catch(() =>
+          setMessage({ type: "error", text: "Mahalleler alınamadı." })
+        );
+    } else {
+      setMahalleler([]);
     }
-  }, [konum.ilceId]);
+  }, [form.ilce_id]);
 
-  const handleRegister = async (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+      ...(name === "il_id" && { ilce_id: "", mahalle_id: "" }),
+      ...(name === "ilce_id" && { mahalle_id: "" }),
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
+    setMessage({ type: "", text: "" });
 
-    if (!ad || !soyad || !email || !sifre || !konum.mahalleId) {
-      alert("Lütfen tüm alanları doldurun.");
+    if (
+      !form.ad ||
+      !form.soyad ||
+      !form.email ||
+      !form.sifre ||
+      !form.mahalle_id
+    ) {
+      setMessage({ type: "error", text: "Tüm alanlar doldurulmalı." });
+      setSubmitting(false);
       return;
     }
-
-    const yeniKullanici = {
-      ad,
-      soyad,
-      email,
-      sifre,
-      il_id: parseInt(konum.ilId),
-      ilce_id: parseInt(konum.ilceId),
-      mahalle_id: parseInt(konum.mahalleId),
-    };
 
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(yeniKullanici),
+        body: JSON.stringify(form),
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
-        alert(errorData.error || "Kayıt başarısız");
-        return;
+        const err = await res.json();
+        throw new Error(err.error || "Kı kayıt yapılamadı.");
       }
 
-      alert("Kayıt başarılı! Giriş yapabilirsiniz.");
-      navigate("/login");
-    } catch (error) {
-      alert("Kayıt sırasında hata oluştu.");
-      console.error(error);
+      const data = await res.json();
+      localStorage.setItem("userId", data.id);
+      localStorage.setItem("userAd", data.ad);
+      localStorage.setItem("userSoyad", data.soyad);
+      setMessage({
+        type: "success",
+        text: "Kayıt başarılı! Yönlendiriliyorsunuz...",
+      });
+
+      setTimeout(() => navigate("/home"), 1500);
+    } catch (err) {
+      setMessage({ type: "error", text: err.message });
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <div className="auth-container">
-      <h2>Kayıt Ol</h2>
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          placeholder="Ad"
-          value={ad}
-          onChange={(e) => setAd(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Soyad"
-          value={soyad}
-          onChange={(e) => setSoyad(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="E-posta"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Şifre"
-          value={sifre}
-          onChange={(e) => setSifre(e.target.value)}
-          required
-        />
+    <div className="profile-container">
+      <div className="profile-header">
+        <h2>Kaydol</h2>
+        <p className="profile-subtitle">
+          Yeni bir hesap oluşturmak için bilgilerinizi girin
+        </p>
+      </div>
 
-        <select
-          value={konum.ilId}
-          onChange={(e) =>
-            setKonum({ ilId: e.target.value, ilceId: "", mahalleId: "" })
-          }
-          required
-        >
-          <option value="">İl Seçiniz</option>
-          {iller.map((il) => (
-            <option key={il.id} value={il.id}>
-              {il.ad}
-            </option>
-          ))}
-        </select>
+      <div className="profile-form-card">
+        {submitting && (
+          <div className="loading-overlay">
+            <div className="loading-spinner"></div>
+          </div>
+        )}
 
-        <select
-          value={konum.ilceId}
-          onChange={(e) =>
-            setKonum((prev) => ({
-              ...prev,
-              ilceId: e.target.value,
-              mahalleId: "",
-            }))
-          }
-          required
-          disabled={!konum.ilId}
-        >
-          <option value="">İlçe Seçiniz</option>
-          {ilceler.map((ilce) => (
-            <option key={ilce.id} value={ilce.id}>
-              {ilce.ad}
-            </option>
-          ))}
-        </select>
+        {message.text && (
+          <div
+            className={
+              message.type === "success" ? "success-message" : "error-message"
+            }
+          >
+            <span>{message.type === "success" ? "✓" : "⚠"}</span>
+            {message.text}
+          </div>
+        )}
 
-        <select
-          value={konum.mahalleId}
-          onChange={(e) =>
-            setKonum((prev) => ({ ...prev, mahalleId: e.target.value }))
-          }
-          required
-          disabled={!konum.ilceId}
-        >
-          <option value="">Mahalle Seçiniz</option>
-          {mahalleler.map((m) => (
-            <option key={m.id} value={m.id}>
-              {m.ad}
-            </option>
-          ))}
-        </select>
+        <form className="profile-form" onSubmit={handleSubmit}>
+          <div className="form-section">
+            <h3 className="section-title">Kullanıcı Bilgileri</h3>
+            <div className="form-row">
+              <div className="form-group">
+                <label className="form-label" htmlFor="ad">
+                  Ad *
+                </label>
+                <input
+                  id="ad"
+                  name="ad"
+                  value={form.ad}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="soyad">
+                  Soyad *
+                </label>
+                <input
+                  id="soyad"
+                  name="soyad"
+                  value={form.soyad}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="email">
+                E-posta *
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="sifre">
+                Şifre *
+              </label>
+              <input
+                id="sifre"
+                name="sifre"
+                type="password"
+                value={form.sifre}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
 
-        <button type="submit">Kayıt Ol</button>
-      </form>
+          <div className="form-section">
+            <h3 className="section-title">Konum Bilgileri</h3>
+            <div className="location-grid">
+              <div className="form-group">
+                <label className="form-label" htmlFor="il_id">
+                  İl
+                </label>
+                <select
+                  id="il_id"
+                  name="il_id"
+                  value={form.il_id}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Seçiniz</option>
+                  {iller.map((il) => (
+                    <option key={il.id} value={il.id}>
+                      {il.ad}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="ilce_id">
+                  İlçe
+                </label>
+                <select
+                  id="ilce_id"
+                  name="ilce_id"
+                  value={form.ilce_id}
+                  onChange={handleChange}
+                  disabled={!form.il_id}
+                  required
+                >
+                  <option value="">Seçiniz</option>
+                  {ilceler.map((ilce) => (
+                    <option key={ilce.id} value={ilce.id}>
+                      {ilce.ad}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="mahalle_id">
+                  Mahalle
+                </label>
+                <select
+                  id="mahalle_id"
+                  name="mahalle_id"
+                  value={form.mahalle_id}
+                  onChange={handleChange}
+                  disabled={!form.ilce_id}
+                  required
+                >
+                  <option value="">Seçiniz</option>
+                  {mahalleler.map((m) => (
+                    <option key={m.id} value={m.id}>
+                      {m.ad}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className="submit-section">
+            <button type="submit" disabled={submitting}>
+              {submitting ? "Kayıt Yapılıyor..." : "Kayıt Ol"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

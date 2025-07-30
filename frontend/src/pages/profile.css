@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 :root {
   --primary: #52796f;
@@ -9,7 +9,7 @@
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
-  
+
   --bg-main: #ffffff;
   --bg-secondary: #f8fffe;
   --bg-tertiary: #f1f8f5;
@@ -18,23 +18,25 @@
   --border: #e0e7e0;
   --border-light: #eff5ef;
   --border-accent: #d4e8d4;
-  
+
   --text-primary: #1a1a1a;
   --text-secondary: #4a5568;
   --text-muted: #718096;
   --text-light: #a0aec0;
   --text-accent: #2f3e46;
-  
+
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
-  
+
   --radius: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
-  
+
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -43,7 +45,8 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   margin: 0;
   background: var(--bg-secondary);
   color: var(--text-primary);
@@ -92,7 +95,7 @@ body {
 }
 
 .profile-form-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -178,14 +181,6 @@ body {
   border-color: var(--border-light);
 }
 
-.profile-form input:required:valid {
-  border-color: var(--success);
-}
-
-.profile-form input:required:invalid:not(:placeholder-shown) {
-  border-color: var(--danger);
-}
-
 .location-section {
   background: var(--bg-tertiary);
   border: 1px solid var(--border-light);
@@ -234,7 +229,11 @@ body {
 }
 
 .profile-form button:hover {
-  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-hover) 0%,
+    var(--primary) 100%
+  );
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -260,7 +259,11 @@ body {
 }
 
 .success-message {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.1) 0%,
+    rgba(16, 185, 129, 0.05) 100%
+  );
   border: 1px solid rgba(16, 185, 129, 0.2);
   color: var(--success);
   padding: 16px 20px;
@@ -274,7 +277,11 @@ body {
 }
 
 .error-message {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.1) 0%,
+    rgba(239, 68, 68, 0.05) 100%
+  );
   border: 1px solid rgba(239, 68, 68, 0.2);
   color: var(--danger);
   padding: 16px 20px;
@@ -343,8 +350,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Responsive Design */
@@ -420,7 +431,7 @@ body {
 }
 
 /* Dark theme support */
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --bg-main: #1a1a1a;
     --bg-secondary: #121212;
@@ -439,7 +450,7 @@ body {
   .loading-overlay {
     background: rgba(30, 30, 30, 0.9);
   }
-}
+} */
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -460,4 +471,16 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
+}
+
+.forgot-password-link {
+  text-align: right;
+  margin: 8px 0 16px;
+}
+
+.forgot-password-link a {
+  color: #444444;
+  text-decoration: underline;
+  font-size: 14px;
+  cursor: pointer;
 }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 :root {
   --primary: #52796f;
@@ -9,7 +9,7 @@
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
-  
+
   --bg-main: #ffffff;
   --bg-secondary: #f8fffe;
   --bg-tertiary: #f1f8f5;
@@ -18,23 +18,25 @@
   --border: #e0e7e0;
   --border-light: #eff5ef;
   --border-accent: #d4e8d4;
-  
+
   --text-primary: #1a1a1a;
   --text-secondary: #4a5568;
   --text-muted: #718096;
   --text-light: #a0aec0;
   --text-accent: #2f3e46;
-  
+
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
-  
+
   --radius: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
-  
+
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -43,7 +45,8 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   margin: 0;
   background: var(--bg-secondary);
   color: var(--text-primary);
@@ -75,7 +78,11 @@ body {
 .mahalle-header {
   margin-bottom: 24px;
   padding: 20px;
-  background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg-tertiary) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-light) 0%,
+    var(--bg-tertiary) 100%
+  );
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-accent);
 }
@@ -326,7 +333,11 @@ body {
 }
 
 .yorum-form button:hover {
-  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-hover) 0%,
+    var(--primary) 100%
+  );
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -354,7 +365,7 @@ body {
 }
 
 .entry-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -377,17 +388,18 @@ body {
 
 .entry-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: space-between; /* Pushes content to edges */
+  align-items: flex-start; /* Align items to the top */
   margin-bottom: 16px;
-  gap: 20px;
+  gap: 20px; /* Space between user info and location/time */
 }
 
 .user-info {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex: 1;
+  flex: 1; /* Allows user info to take available space */
+  min-width: 0; /* Prevents flex item from overflowing */
 }
 
 .user-avatar {
@@ -408,7 +420,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-width: 0;
+  min-width: 0; /* Ensures text inside can be truncated */
 }
 
 .user-name {
@@ -416,27 +428,35 @@ body {
   font-weight: 600;
   font-size: 16px;
   letter-spacing: -0.01em;
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Show ellipsis for overflow */
 }
 
-.entry-time {
+/* New style for location and time container */
+.location-and-time {
+  display: flex;
+  flex-direction: column; /* Stack location and time vertically */
+  align-items: flex-end; /* Align contents to the right */
   font-size: 13px;
   color: var(--text-light);
   font-weight: 500;
-  flex-shrink: 0;
-}
-
-.entry-header strong {
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 16px;
-  letter-spacing: -0.01em;
+  text-align: right;
+  gap: 4px; /* Space between location and time */
+  flex-shrink: 0; /* Prevent from shrinking */
 }
 
 .entry-location {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 500;
+  color: var(--text-muted); /* Using text-muted for location */
+  font-size: 12px; /* Slightly smaller for subtlety */
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Show ellipsis for overflow */
 }
+
+/* .entry-time {
+  /* Using existing styles for entry-time, adjust if needed */
+/* } */
 
 .entry-text {
   color: var(--text-primary);
@@ -468,14 +488,15 @@ body {
   text-transform: capitalize;
 }
 
-.entry-meta {
+/* Removed redundant .entry-meta as its content is now in .location-and-time */
+/* .entry-meta {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid var(--border-light);
   font-size: 14px;
   color: var(--text-muted);
   font-weight: 500;
-}
+} */
 
 /* Empty and Loading States */
 .empty-state {
@@ -588,8 +609,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Statistics and Info Boxes */
@@ -693,11 +718,11 @@ body {
     gap: 24px;
     padding: 20px;
   }
-  
+
   .sidebar {
     width: 240px;
   }
-  
+
   .content-area h3 {
     font-size: 24px;
   }
@@ -799,9 +824,15 @@ body {
     gap: 12px;
   }
 
-  .entry-location {
+  /* Adjustments for mobile to keep location/time readable */
+  .location-and-time {
+    align-items: flex-start; /* Align contents to the left on smaller screens */
     text-align: left;
-    align-self: flex-start;
+    width: 100%; /* Take full width */
+  }
+
+  .entry-location {
+    white-space: normal; /* Allow wrapping on mobile for location */
   }
 
   .entry-text {
@@ -844,7 +875,7 @@ body {
 }
 
 /* Dark theme support (optional) */
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --bg-main: #1a1a1a;
     --bg-secondary: #121212;
@@ -859,7 +890,7 @@ body {
     --text-muted: #a0a0a0;
     --text-light: #707070;
   }
-}
+} */
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -880,4 +911,23 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
+}
+
+.user-location-info {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding-left: 22px; /* ikon hizasına denk gelsin */
+}
+
+.user-location-text {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.sub-category-list {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
 }

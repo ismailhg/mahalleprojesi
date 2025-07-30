@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require("uuid");
+const nodemailer = require("nodemailer");
+const { Op } = require("sequelize");
 const User = require("../models/User");
+
+// ENV dosyasını içeri aktar
+require("dotenv").config();
 
 // Register endpoint
 router.post("/register", async (req, res) => {
@@ -55,6 +61,84 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     console.error("Giriş Hatası:", error);
     res.status(500).json({ error: "Giriş yapılırken bir hata oluştu." });
+  }
+});
+
+// Şifre sıfırlama bağlantısı gönder
+router.post("/sifremi-unuttum", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ where: { email } });
+    if (!user) return res.status(404).json({ error: "Kullanıcı bulunamadı." });
+
+    const resetToken = uuidv4();
+    const expires = new Date(Date.now() + 1000 * 60 * 60); // 1 saat geçerli
+
+    user.resetToken = resetToken;
+    user.resetTokenExpires = expires;
+    await user.save();
+
+    const resetLink = `${process.env.FRONTEND_URL}/sifre-sifirla/${resetToken}`;
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Mahallem Uygulaması" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "Şifre Sıfırlama Bağlantısı",
+      html: `
+        <p>Merhaba ${user.ad},</p>
+        <p>Şifre sıfırlamak için aşağıdaki bağlantıya tıklayın:</p>
+        <a href="${resetLink}">${resetLink}</a>
+        <p>Bağlantı 1 saat boyunca geçerlidir.</p>
+      `,
+    });
+
+    res.json({
+      message: "Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.",
+    });
+  } catch (err) {
+    console.error("E-posta gönderim hatası:", err);
+    res.status(500).json({ error: "Sunucu hatası. E-posta gönderilemedi." });
+  }
+});
+
+// Şifre sıfırlama işlemi (token ile gelen kullanıcı yeni şifresini girer)
++router.post("/sifre-sifirla/:token", async (req, res) => {
+  const { token } = req.params;
+  const { sifre } = req.body;
+
+  try {
+    const user = await User.findOne({
+      where: {
+        resetToken: token,
+        resetTokenExpires: { [Op.gt]: new Date() },
+      },
+    });
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ error: "Bağlantı geçersiz veya süresi dolmuş." });
+    }
+
+    const hashed = await bcrypt.hash(sifre, 10);
+    user.sifre = hashed;
+    user.resetToken = null;
+    user.resetTokenExpires = null;
+    await user.save();
+
+    res.json({ message: "Şifre başarıyla güncellendi." });
+  } catch (error) {
+    console.error("Şifre sıfırlama hatası:", error);
+    res.status(500).json({ error: "Sunucu hatası." });
   }
 });
 

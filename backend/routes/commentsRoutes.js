@@ -57,8 +57,16 @@ router.get("/my-mahalle/:userId", async (req, res) => {
 
 // 3. Yorum gönderme
 router.post("/", async (req, res) => {
-  const { kategori, icerik, kullaniciId, y_ilId, y_ilceId, y_mahalleId } =
-    req.body;
+  const {
+    kategori,
+    icerik,
+    kullaniciId,
+    y_ilId,
+    y_ilceId,
+    y_mahalleId,
+    ad,
+    soyad,
+  } = req.body;
 
   if (
     !kategori ||
@@ -76,6 +84,8 @@ router.post("/", async (req, res) => {
       kategori,
       icerik,
       kullaniciId,
+      ad,
+      soyad,
       y_ilId,
       y_ilceId,
       y_mahalleId,

@@ -22,15 +22,10 @@ const Header = () => {
       <div className="container">
         <div className="logo">
           <Link to="/home" onClick={toggleMenu} className="logo-link">
-            <img 
-              src={logoImage} 
-              alt="Mahallem Logo" 
-              className="logo-image"
-            />
-            <span className="logo-text">Mahalle</span>
+            <img src={logoImage} alt="Mahallem Logo" className="logo-image" />
+            {/* <span className="logo-text">Mahallem</span> */}
           </Link>
         </div>
-
 
         <div className="menu-toggle" onClick={toggleMenu}>
           ☰
@@ -38,7 +33,11 @@ const Header = () => {
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
           {userId ? (
             <>
-              <Link to="/MahallemPage" className="nav-button" onClick={toggleMenu}>
+              <Link
+                to="/MahallemPage"
+                className="nav-button"
+                onClick={toggleMenu}
+              >
                 Mahallem
               </Link>
               <Link to="/profile" className="nav-button" onClick={toggleMenu}>

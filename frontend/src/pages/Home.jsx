@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { getTimeAgo } from "../utils/timeUtils";
 import "./home.css";
-
-const categories = ["internet sağlayıcıları", "hastane", "okul", "market"];
+import { categoryGroups } from "../utils/categoryGroups";
 
 const Home = () => {
   const [aktifKategori, setAktifKategori] = useState("market");
@@ -10,6 +10,8 @@ const Home = () => {
   const [yeniYorum, setYeniYorum] = useState("");
   const [seciliKategori, setSeciliKategori] = useState("market");
   const [kullaniciId, setKullaniciId] = useState(null);
+  const [ad, setAd] = useState("");
+  const [soyad, setSoyad] = useState("");
   const [iller, setIller] = useState([]);
   const [ilceler, setIlceler] = useState([]);
   const [mahalleler, setMahalleler] = useState([]);
@@ -17,15 +19,15 @@ const Home = () => {
 
   useEffect(() => {
     const id = Number(localStorage.getItem("userId"));
-    const ad = localStorage.getItem("userAd");
+    const adFromStorage = localStorage.getItem("userAd");
+    const soyadFromStorage = localStorage.getItem("userSoyad");
 
-    if (!id || isNaN(id) || !ad) {
-      alert("Yorum gönderebilmek için giriş yapmalısınız.");
-      window.location.href = "/login";
-      return;
+    if (id && !isNaN(id) && adFromStorage && soyadFromStorage) {
+      setKullaniciId(id);
+      setAd(adFromStorage);
+      setSoyad(soyadFromStorage);
     }
 
-    setKullaniciId(id);
     yorumlariGetir();
 
     fetch("/api/location/iller")
@@ -72,6 +74,10 @@ const Home = () => {
   };
 
   const yorumGonder = async () => {
+    if (!kullaniciId) {
+      return alert("Yorum gönderebilmek için giriş yapmalısınız.");
+    }
+
     if (
       !yeniYorum.trim() ||
       !konum.ilId ||
@@ -86,6 +92,8 @@ const Home = () => {
       kategori: seciliKategori,
       icerik: yeniYorum.trim(),
       kullaniciId: kullaniciId,
+      ad: ad,
+      soyad: soyad,
       y_ilId: Number(konum.ilId),
       y_ilceId: Number(konum.ilceId),
       y_mahalleId: Number(konum.mahalleId),
@@ -125,13 +133,25 @@ const Home = () => {
       <div className="sidebar">
         <h4>Kategoriler</h4>
         <ul className="category-list">
-          {categories.map((cat) => (
-            <li
-              key={cat}
-              className={cat === aktifKategori ? "active" : ""}
-              onClick={() => setAktifKategori(cat)}
-            >
-              {formatCategory(cat)}
+          {categoryGroups.map((group, idx) => (
+            <li key={idx}>
+              <details>
+                <summary>{group.title}</summary>
+                <ul className="sub-category-list">
+                  {group.categories.map((cat) => (
+                    <li
+                      key={cat}
+                      className={cat === aktifKategori ? "active" : ""}
+                      onClick={() => {
+                        setAktifKategori(cat);
+                        setSeciliKategori(cat);
+                      }}
+                    >
+                      {formatCategory(cat)}
+                    </li>
+                  ))}
+                </ul>
+              </details>
             </li>
           ))}
         </ul>
@@ -140,7 +160,8 @@ const Home = () => {
       <div className="content-area">
         <h3>{formatCategory(aktifKategori)}</h3>
         <p className="sub-heading">
-          {aktifKategori} hakkında deneyimlerinizi paylaşın ve diğer kullanıcıların yorumlarını okuyun.
+          {aktifKategori} hakkında deneyimlerinizi paylaşın ve diğer
+          kullanıcıların yorumlarını okuyun.
         </p>
 
         <div className="yorum-form">
@@ -202,10 +223,15 @@ const Home = () => {
             value={seciliKategori}
             onChange={(e) => setSeciliKategori(e.target.value)}
           >
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {formatCategory(cat)}
-              </option>
+            <option value="">Kategori Seçiniz</option>
+            {categoryGroups.map((group, index) => (
+              <optgroup key={index} label={group.title}>
+                {group.categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {formatCategory(cat)}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
 
@@ -221,20 +247,33 @@ const Home = () => {
             secilenYorumlar.map((entry) => (
               <div key={entry.id} className="entry-card">
                 <div className="entry-header">
-                  <strong>{entry.User?.ad || "Anonim"}</strong>
-                  <span className="entry-location">
-                    {entry.yorumIl?.il_adi} / {entry.yorumIlce?.ilce_adi} / {entry.yorumMahalle?.mahalle_adi}
-                  </span>
+                  <div className="user-info">
+                    <div className="user-avatar">
+                      {(entry.User?.ad || "A").charAt(0).toUpperCase()}
+                    </div>
+                    <div className="user-details">
+                      <strong className="user-name">
+                        {entry.User?.ad || "Anonim"}
+                      </strong>
+                    </div>
+                  </div>
+                  <div className="location-and-time">
+                    <span className="entry-location">
+                      {entry.yorumIl?.il_adi}{" "}
+                      {entry.yorumIlce?.ilce_adi
+                        ? `/ ${entry.yorumIlce?.ilce_adi}`
+                        : ""}{" "}
+                      {entry.yorumMahalle?.mahalle_adi
+                        ? `/ ${entry.yorumMahalle?.mahalle_adi}`
+                        : ""}
+                    </span>
+                    <span className="entry-time">
+                      {entry.tarih ? getTimeAgo(entry.tarih) : "Bilinmiyor"}
+                    </span>
+                  </div>
                 </div>
-                <p className="entry-text">{entry.icerik}</p>
-                <div className="entry-meta">
-                  {new Date(entry.createdAt).toLocaleDateString("tr-TR", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                <div className="entry-content">
+                  <p className="entry-text">{entry.icerik}</p>
                 </div>
               </div>
             ))
@@ -242,7 +281,6 @@ const Home = () => {
             <div className="empty-state">
               <p>Bu kategoriye ait henüz yorum bulunmuyor.</p>
               <p>İlk yorumu siz yazarak başlayabilirsiniz!</p>
-              
             </div>
           )}
         </div>

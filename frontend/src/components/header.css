@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 :root {
   --green-start: #22c55e;
@@ -14,13 +14,18 @@
 }
 
 .site-header {
-  background: linear-gradient(135deg, var(--green-start), var(--green-mid), var(--green-end));
+  background: linear-gradient(
+    135deg,
+    var(--green-start),
+    var(--green-mid),
+    var(--green-end)
+  );
   padding: 14px 28px;
   color: white;
   position: sticky;
   top: 0;
   z-index: 1000;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -37,28 +42,18 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 600;
-  font-size: 22px;
-  color: white;
-  text-decoration: none;
 }
 
 .logo-link {
   display: flex;
   align-items: center;
-  text-decoration: none; /* ALT ÇİZGİYİ KALDIR */
+  text-decoration: none;
 }
 
 .logo-image {
-  height: 40px; /* isteğe göre ayarlayabilirsin */
+  height: 50px;
+  width: auto;
   margin-right: 8px;
-}
-
-.logo-text {
-  color: white;       /* YAZIYI BEYAZ YAP */
-  font-size: 24px;    /* isteğe göre büyüt/küçült */
-  font-weight: bold;
-  text-decoration: none; /* ALT ÇİZGİ YOK */
 }
 
 .menu-toggle {
@@ -86,7 +81,6 @@
   border: 1px solid var(--white-border);
   backdrop-filter: var(--blur);
   transition: 0.3s ease;
-  position: relative;
 }
 
 .nav-button:hover {
@@ -103,6 +97,7 @@
   background: linear-gradient(to right, #b91c1c, #991b1b);
 }
 
+/* Mobil uyumlu menü */
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -115,7 +110,12 @@
     left: 0;
     width: 100%;
     flex-direction: column;
-    background: linear-gradient(135deg, var(--green-start), var(--green-mid), var(--green-end));
+    background: linear-gradient(
+      135deg,
+      var(--green-start),
+      var(--green-mid),
+      var(--green-end)
+    );
     padding: 16px;
     border-radius: 0 0 12px 12px;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);

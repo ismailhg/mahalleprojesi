@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MahallemPage from "./pages/MahallemPage";
 import Profile from "./pages/Profile";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/mahallemPage" element={<MahallemPage />} />
         <Route path="/Profile" element={<Profile />} />
+        <Route path="/sifre-sifirla/:token" element={<ResetPassword />} />
       </Routes>
     </Router>
   );
