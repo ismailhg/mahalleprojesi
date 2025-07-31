@@ -20,7 +20,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/api/location/iller")
+    fetch(`${process.env.REACT_APP_API_URL}/api/location/iller`)
       .then((res) => res.json())
       .then(setIller)
       .catch(() => setMessage({ type: "error", text: "İller alınamadı." }));
@@ -28,7 +28,9 @@ const Register = () => {
 
   useEffect(() => {
     if (form.il_id) {
-      fetch(`/api/location/ilceler?ilId=${form.il_id}`)
+      fetch(
+        `${process.env.REACT_APP_API_URL}/api/location/ilceler?ilId=${form.il_id}`
+      )
         .then((res) => res.json())
         .then(setIlceler)
         .catch(() => setMessage({ type: "error", text: "İlçeler alınamadı." }));
@@ -40,7 +42,9 @@ const Register = () => {
 
   useEffect(() => {
     if (form.ilce_id) {
-      fetch(`/api/location/mahalleler?ilceId=${form.ilce_id}`)
+      fetch(
+        `${process.env.REACT_APP_API_URL}/api/location/mahalleler?ilceId=${form.ilce_id}`
+      )
         .then((res) => res.json())
         .then(setMahalleler)
         .catch(() =>
@@ -79,11 +83,14 @@ const Register = () => {
     }
 
     try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        }
+      );
 
       if (!res.ok) {
         const err = await res.json();

@@ -325,7 +325,6 @@ body {
   color: var(--text-primary);
 }
 
-/* Loading State */
 .loading-overlay {
   position: absolute;
   top: 0;
@@ -358,7 +357,6 @@ body {
   }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .profile-container {
     margin: 20px auto;
@@ -387,7 +385,7 @@ body {
   .profile-form input,
   .profile-form select {
     padding: 14px 16px;
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px;
   }
 
   .profile-form button {
@@ -430,29 +428,6 @@ body {
   }
 }
 
-/* Dark theme support */
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --bg-main: #1a1a1a;
-    --bg-secondary: #121212;
-    --bg-tertiary: #2a2a2a;
-    --bg-card: #1e1e1e;
-    --bg-hover: #252525;
-    --border: #333333;
-    --border-light: #2a2a2a;
-    --border-accent: #404040;
-    --text-primary: #ffffff;
-    --text-secondary: #e0e0e0;
-    --text-muted: #a0a0a0;
-    --text-light: #707070;
-  }
-
-  .loading-overlay {
-    background: rgba(30, 30, 30, 0.9);
-  }
-} */
-
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

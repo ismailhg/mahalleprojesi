@@ -30,7 +30,7 @@ const Home = () => {
 
     yorumlariGetir();
 
-    fetch("/api/location/iller")
+    fetch(`${process.env.REACT_APP_API_URL}/api/location/iller`)
       .then((res) => res.json())
       .then(setIller)
       .catch((err) => console.error("İller alınamadı", err));
@@ -38,7 +38,9 @@ const Home = () => {
 
   useEffect(() => {
     if (konum.ilId) {
-      fetch(`/api/location/ilceler?ilId=${konum.ilId}`)
+      fetch(
+        `${process.env.REACT_APP_API_URL}/api/location/ilceler?ilId=${konum.ilId}`
+      )
         .then((res) => res.json())
         .then(setIlceler)
         .catch((err) => console.error("İlçeler alınamadı", err));
@@ -50,7 +52,9 @@ const Home = () => {
 
   useEffect(() => {
     if (konum.ilceId) {
-      fetch(`/api/location/mahalleler?ilceId=${konum.ilceId}`)
+      fetch(
+        `${process.env.REACT_APP_API_URL}/api/location/mahalleler?ilceId=${konum.ilceId}`
+      )
         .then((res) => res.json())
         .then(setMahalleler)
         .catch((err) => console.error("Mahalleler alınamadı", err));
@@ -61,7 +65,9 @@ const Home = () => {
 
   const yorumlariGetir = async () => {
     try {
-      const response = await fetch("/api/comments");
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/comments`
+      );
       if (!response.ok) throw new Error("Sunucu hatası");
       const data = await response.json();
       setTumYorumlar(data);
@@ -100,11 +106,14 @@ const Home = () => {
     };
 
     try {
-      const response = await fetch("/api/comments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(yeniYorumObj),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/comments`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(yeniYorumObj),
+        }
+      );
 
       if (!response.ok) throw new Error("Sunucu hatası");
 

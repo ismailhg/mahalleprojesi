@@ -21,11 +21,14 @@ const ResetPassword = () => {
     setMesaj("");
 
     try {
-      const res = await fetch(`/api/auth/sifre-sifirla/${token}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sifre: yeniSifre }),
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/sifre-sifirla/${token}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sifre: yeniSifre }),
+        }
+      );
 
       const data = await res.json();
       if (res.ok) {

@@ -65,7 +65,6 @@ body {
   min-height: 100vh;
 }
 
-/* Sidebar Styles */
 .sidebar {
   width: 280px;
   flex-shrink: 0;
@@ -74,7 +73,6 @@ body {
   height: fit-content;
 }
 
-/* Mahalle Header */
 .mahalle-header {
   margin-bottom: 24px;
   padding: 20px;
@@ -190,13 +188,11 @@ body {
   transform: none;
 }
 
-/* Content Area */
 .content-area {
   flex: 1;
   min-width: 0;
 }
 
-/* Page Header */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -260,7 +256,6 @@ body {
   font-weight: 500;
 }
 
-/* Form Styles */
 .yorum-form {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -346,7 +341,6 @@ body {
   transform: translateY(0);
 }
 
-/* Entry List Styles */
 .entry-list {
   display: flex;
   flex-direction: column;
@@ -388,18 +382,18 @@ body {
 
 .entry-header {
   display: flex;
-  justify-content: space-between; /* Pushes content to edges */
-  align-items: flex-start; /* Align items to the top */
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 16px;
-  gap: 20px; /* Space between user info and location/time */
+  gap: 20px;
 }
 
 .user-info {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex: 1; /* Allows user info to take available space */
-  min-width: 0; /* Prevents flex item from overflowing */
+  flex: 1;
+  min-width: 0;
 }
 
 .user-avatar {
@@ -420,7 +414,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-width: 0; /* Ensures text inside can be truncated */
+  min-width: 0;
 }
 
 .user-name {
@@ -428,35 +422,30 @@ body {
   font-weight: 600;
   font-size: 16px;
   letter-spacing: -0.01em;
-  white-space: nowrap; /* Prevent wrapping */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Show ellipsis for overflow */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* New style for location and time container */
 .location-and-time {
   display: flex;
-  flex-direction: column; /* Stack location and time vertically */
-  align-items: flex-end; /* Align contents to the right */
+  flex-direction: column;
+  align-items: flex-end;
   font-size: 13px;
   color: var(--text-light);
   font-weight: 500;
   text-align: right;
-  gap: 4px; /* Space between location and time */
-  flex-shrink: 0; /* Prevent from shrinking */
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 .entry-location {
-  color: var(--text-muted); /* Using text-muted for location */
-  font-size: 12px; /* Slightly smaller for subtlety */
-  white-space: nowrap; /* Prevent wrapping */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Show ellipsis for overflow */
+  color: var(--text-muted);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-/* .entry-time {
-  /* Using existing styles for entry-time, adjust if needed */
-/* } */
 
 .entry-text {
   color: var(--text-primary);
@@ -488,17 +477,6 @@ body {
   text-transform: capitalize;
 }
 
-/* Removed redundant .entry-meta as its content is now in .location-and-time */
-/* .entry-meta {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-light);
-  font-size: 14px;
-  color: var(--text-muted);
-  font-weight: 500;
-} */
-
-/* Empty and Loading States */
 .empty-state {
   background: var(--bg-card);
   border: 2px dashed var(--border-accent);
@@ -617,7 +595,6 @@ body {
   }
 }
 
-/* Statistics and Info Boxes */
 .quick-stats {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
@@ -712,7 +689,6 @@ body {
   font-size: 14px;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .home-container {
     gap: 24px;
@@ -804,7 +780,7 @@ body {
   .yorum-form textarea,
   .yorum-form select {
     padding: 14px 16px;
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px;
   }
 
   .yorum-form button {
@@ -824,15 +800,14 @@ body {
     gap: 12px;
   }
 
-  /* Adjustments for mobile to keep location/time readable */
   .location-and-time {
-    align-items: flex-start; /* Align contents to the left on smaller screens */
+    align-items: flex-start;
     text-align: left;
-    width: 100%; /* Take full width */
+    width: 100%;
   }
 
   .entry-location {
-    white-space: normal; /* Allow wrapping on mobile for location */
+    white-space: normal;
   }
 
   .entry-text {
@@ -874,25 +849,6 @@ body {
   }
 }
 
-/* Dark theme support (optional) */
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --bg-main: #1a1a1a;
-    --bg-secondary: #121212;
-    --bg-tertiary: #2a2a2a;
-    --bg-card: #1e1e1e;
-    --bg-hover: #252525;
-    --border: #333333;
-    --border-light: #2a2a2a;
-    --border-accent: #404040;
-    --text-primary: #ffffff;
-    --text-secondary: #e0e0e0;
-    --text-muted: #a0a0a0;
-    --text-light: #707070;
-  }
-} */
-
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -917,7 +873,7 @@ body {
   margin-top: 4px;
   font-size: 13px;
   color: var(--text-secondary);
-  padding-left: 22px; /* ikon hizasına denk gelsin */
+  padding-left: 22px;
 }
 
 .user-location-text {

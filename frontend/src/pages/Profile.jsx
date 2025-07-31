@@ -38,7 +38,7 @@ const Profile = () => {
       return;
     }
 
-    fetch(`/api/user/${userId}`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/user/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         setUserData({
@@ -59,7 +59,7 @@ const Profile = () => {
   }, [userId, navigate]);
 
   useEffect(() => {
-    fetch("/api/location/iller")
+    fetch(`${process.env.REACT_APP_API_URL}/api/location/iller`)
       .then((res) => res.json())
       .then(setIller)
       .catch(() => setMessage({ type: "error", text: "İller alınamadı." }));
@@ -67,7 +67,9 @@ const Profile = () => {
 
   useEffect(() => {
     if (userData.il_id) {
-      fetch(`/api/location/ilceler?ilId=${userData.il_id}`)
+      fetch(
+        `${process.env.REACT_APP_API_URL}/api/location/ilceler?ilId=${userData.il_id}`
+      )
         .then((res) => res.json())
         .then(setIlceler)
         .catch(() => setMessage({ type: "error", text: "İlçeler alınamadı." }));
@@ -79,7 +81,9 @@ const Profile = () => {
 
   useEffect(() => {
     if (userData.ilce_id) {
-      fetch(`/api/location/mahalleler?ilceId=${userData.ilce_id}`)
+      fetch(
+        `${process.env.REACT_APP_API_URL}/api/location/mahalleler?ilceId=${userData.ilce_id}`
+      )
         .then((res) => res.json())
         .then(setMahalleler)
         .catch(() =>
@@ -124,11 +128,14 @@ const Profile = () => {
     setSubmitting(true);
 
     try {
-      const res = await fetch(`/api/user/${userId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/user/${userId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData),
+        }
+      );
 
       if (!res.ok) {
         const errData = await res.json();

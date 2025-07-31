@@ -19,11 +19,14 @@ const Login = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, sifre }),
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, sifre }),
+        }
+      );
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -49,11 +52,14 @@ const Login = () => {
 
   const handleResetPassword = async () => {
     try {
-      const res = await fetch("/api/auth/sifremi-unuttum", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: resetEmail }),
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/sifremi-unuttum`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: resetEmail }),
+        }
+      );
 
       if (!res.ok) throw new Error("E-posta gönderilemedi.");
 

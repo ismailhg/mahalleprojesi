@@ -23,11 +23,11 @@ const Yorum = sequelize.define(
     },
     ad: {
       type: DataTypes.STRING,
-      allowNull: true, // zorunlu değil
+      allowNull: true,
     },
     soyad: {
       type: DataTypes.STRING,
-      allowNull: true, // zorunlu değil
+      allowNull: true,
     },
     y_ilId: {
       type: DataTypes.INTEGER,

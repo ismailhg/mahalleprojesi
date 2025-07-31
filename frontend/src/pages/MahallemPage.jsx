@@ -27,7 +27,9 @@ const MahallemPage = () => {
 
   const fetchMyMahalleYorumlari = async (id) => {
     try {
-      const res = await fetch(`/api/comments/my-mahalle/${id}`);
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/comments/my-mahalle/${id}`
+      );
       if (!res.ok) throw new Error("Sunucu hatası veya yorumlar bulunamadı.");
       const data = await res.json();
       setYorumlar(data);
