@@ -64,7 +64,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Şifre sıfırlama bağlantısı gönder
 router.post("/sifremi-unuttum", async (req, res) => {
   const { email } = req.body;
 
@@ -73,13 +72,13 @@ router.post("/sifremi-unuttum", async (req, res) => {
     if (!user) return res.status(404).json({ error: "Kullanıcı bulunamadı." });
 
     const resetToken = uuidv4();
-    const expires = new Date(Date.now() + 1000 * 60 * 60); // 1 saat geçerli
+    const expires = new Date(Date.now() + 1000 * 60 * 60);
 
     user.resetToken = resetToken;
     user.resetTokenExpires = expires;
     await user.save();
 
-    const resetLink = `${process.env.FRONTEND_URL}/sifre-sifirla/${resetToken}`;
+    const resetLink = `${process.env.FRONTEND_URL}/#/sifre-sifirla/${resetToken}`;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
