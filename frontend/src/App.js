@@ -8,7 +8,7 @@ import MahallemPage from "./pages/MahallemPage";
 import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
 
-//redeployiçin
+//redeployiçin2
 function App() {
   return (
     <Router basename="/">
