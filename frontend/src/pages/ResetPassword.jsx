@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./profile.css";
 
+console.log("TOKEN:", token);
+
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
