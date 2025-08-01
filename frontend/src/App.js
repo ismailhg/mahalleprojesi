@@ -10,7 +10,7 @@ import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/">
       <Header />
       <Routes>
         <Route path="/register" element={<Register />} />
