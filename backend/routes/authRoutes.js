@@ -79,7 +79,7 @@ router.post("/sifremi-unuttum", async (req, res) => {
     user.resetTokenExpires = expires;
     await user.save();
 
-    const resetLink = `${process.env.FRONTEND_URL}/sifre-sifirla/${resetToken}`;
+    const resetLink = `${process.env.FRONTEND_URL}/#/sifre-sifirla/${resetToken}`;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
