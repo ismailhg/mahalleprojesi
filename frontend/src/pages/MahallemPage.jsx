@@ -5,7 +5,7 @@ import { categoryGroups } from "../utils/categoryGroups";
 import "./home.css";
 
 const MahallemPage = () => {
-  const [aktifKategori, setAktifKategori] = useState("market");
+  const [aktifKategori, setAktifKategori] = useState(""); // Tüm yorumları görmek için boş başlat
   const [yorumlar, setYorumlar] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
@@ -41,9 +41,11 @@ const MahallemPage = () => {
     }
   };
 
-  const filtreliYorumlar = yorumlar.filter(
-    (y) => y.kategori?.toLowerCase() === aktifKategori.toLowerCase()
-  );
+  const filtreliYorumlar = aktifKategori
+    ? yorumlar.filter(
+        (y) => y.kategori?.toLowerCase() === aktifKategori.toLowerCase()
+      )
+    : yorumlar;
 
   const formatCategory = (category) =>
     category[0].toLocaleUpperCase("tr-TR") + category.slice(1);
@@ -114,7 +116,11 @@ const MahallemPage = () => {
       <div className="content-area">
         <div className="page-header">
           <div className="page-title-section">
-            <h3 className="page-sub-title">{formatCategory(aktifKategori)}</h3>
+            <h3 className="page-sub-title">
+              {aktifKategori
+                ? formatCategory(aktifKategori)
+                : "Mahallenizden Tüm Yorumlar"}
+            </h3>
           </div>
         </div>
 
