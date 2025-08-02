@@ -5,7 +5,7 @@ import { categoryGroups } from "../utils/categoryGroups";
 import "./home.css";
 
 const MahallemPage = () => {
-  const [aktifKategori, setAktifKategori] = useState(""); // Tüm yorumları görmek için boş başlat
+  const [aktifKategori, setAktifKategori] = useState("");
   const [yorumlar, setYorumlar] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);

@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import MahallemPage from "./pages/MahallemPage";
 import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
+import { Navigate } from "react-router-dom";
 
 function App() {
   return (
