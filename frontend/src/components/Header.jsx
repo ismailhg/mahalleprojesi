@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./header.css";
 import logoImage from "./mahallelogo.png";
@@ -7,6 +7,7 @@ const Header = () => {
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef();
 
   const handleLogout = () => {
     localStorage.clear();
@@ -17,27 +18,34 @@ const Header = () => {
     setMenuOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuOpen && navRef.current && !navRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
+
   return (
     <header className="site-header">
       <div className="container">
         <div className="logo">
-          <Link to="/home" onClick={toggleMenu} className="logo-link">
+          <Link to="/home" className="logo-link">
             <img src={logoImage} alt="Mahallem Logo" className="logo-image" />
-            {/* <span className="logo-text">Mahallem</span> */}
           </Link>
         </div>
 
         <div className="menu-toggle" onClick={toggleMenu}>
           ☰
         </div>
-        <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
+
+        <nav ref={navRef} className={`nav-links ${menuOpen ? "open" : ""}`}>
           {userId ? (
             <>
-              <Link
-                to="/MahallemPage"
-                className="nav-button"
-                onClick={toggleMenu}
-              >
+              <Link to="/MahallemPage" className="nav-button" onClick={toggleMenu}>
                 Mahallem
               </Link>
               <Link to="/profile" className="nav-button" onClick={toggleMenu}>

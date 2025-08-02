@@ -153,9 +153,13 @@ const Home = () => {
                     <li
                       key={cat}
                       className={cat === aktifKategori ? "active" : ""}
-                      onClick={() => {
+                      onClick={(e) => {
                         setAktifKategori(cat);
                         setSeciliKategori(cat);
+                        const details = e.target.closest("details");
+                        if (details) {
+                          details.open = false;
+                        }
                       }}
                     >
                       {formatCategory(cat)}

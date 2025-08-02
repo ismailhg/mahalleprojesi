@@ -93,7 +93,13 @@ const MahallemPage = () => {
                     <li
                       key={cat}
                       className={cat === aktifKategori ? "active" : ""}
-                      onClick={() => setAktifKategori(cat)}
+                      onClick={(e) => {
+                        setAktifKategori(cat);
+                        const details = e.target.closest("details");
+                        if (details) {
+                          details.open = false;
+                        }
+                      }}
                     >
                       {formatCategory(cat)}
                     </li>
