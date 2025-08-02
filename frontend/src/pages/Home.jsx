@@ -4,11 +4,11 @@ import "./home.css";
 import { categoryGroups } from "../utils/categoryGroups";
 
 const Home = () => {
-  const [aktifKategori, setAktifKategori] = useState("market");
+  const [aktifKategori, setAktifKategori] = useState("");
   const [tumYorumlar, setTumYorumlar] = useState([]);
   const [loading, setLoading] = useState(true);
   const [yeniYorum, setYeniYorum] = useState("");
-  const [seciliKategori, setSeciliKategori] = useState("market");
+  const [seciliKategori, setSeciliKategori] = useState("");
   const [kullaniciId, setKullaniciId] = useState(null);
   const [ad, setAd] = useState("");
   const [soyad, setSoyad] = useState("");
@@ -129,9 +129,11 @@ const Home = () => {
     }
   };
 
-  const secilenYorumlar = tumYorumlar.filter(
-    (yorum) => yorum.kategori?.toLowerCase() === aktifKategori.toLowerCase()
-  );
+  const secilenYorumlar = aktifKategori
+    ? tumYorumlar.filter(
+        (yorum) => yorum.kategori?.toLowerCase() === aktifKategori.toLowerCase()
+      )
+    : tumYorumlar;
 
   const formatCategory = (category) => {
     return category[0].toLocaleUpperCase("tr-TR") + category.slice(1);
@@ -167,10 +169,15 @@ const Home = () => {
       </div>
 
       <div className="content-area">
-        <h3>{formatCategory(aktifKategori)}</h3>
+        <h3>
+          {aktifKategori
+            ? formatCategory(aktifKategori)
+            : "Tüm Kategorilerden Yorumlar"}
+        </h3>
         <p className="sub-heading">
-          {aktifKategori} hakkında deneyimlerinizi paylaşın ve diğer
-          kullanıcıların yorumlarını okuyun.
+          {aktifKategori
+            ? `${aktifKategori} hakkında deneyimlerinizi paylaşın ve diğer kullanıcıların yorumlarını okuyun.`
+            : "Tüm kategorilerdeki kullanıcı yorumlarını görüntüleyebilirsiniz. Filtrelemek için kategori seçin."}
         </p>
 
         <div className="yorum-form">
