@@ -99,4 +99,32 @@ router.post("/", async (req, res) => {
   }
 });
 
+// 4. Yorum silme
+router.delete("/:id", async (req, res) => {
+  const yorumId = req.params.id;
+  const { kullaniciId } = req.body;
+
+  if (!kullaniciId) {
+    return res.status(400).json({ error: "Kullanıcı ID gerekli." });
+  }
+
+  try {
+    const yorum = await Yorum.findByPk(yorumId);
+
+    if (!yorum) {
+      return res.status(404).json({ error: "Yorum bulunamadı." });
+    }
+
+    if (yorum.kullaniciId !== kullaniciId) {
+      return res.status(403).json({ error: "Bu yorumu silme yetkiniz yok." });
+    }
+
+    await yorum.destroy();
+    res.json({ message: "Yorum başarıyla silindi." });
+  } catch (err) {
+    console.error("Yorum silinemedi:", err);
+    res.status(500).json({ error: "Sunucu hatası." });
+  }
+});
+
 module.exports = router;

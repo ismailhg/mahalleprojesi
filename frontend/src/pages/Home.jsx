@@ -94,6 +94,34 @@ const Home = () => {
       return alert("Lütfen tüm alanları doldurun.");
     }
 
+    const yorumSil = async (yorumId) => {
+      const onay = window.confirm(
+        "Bu yorumu silmek istediğinize emin misiniz?"
+      );
+      if (!onay) return;
+
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/comments/${yorumId}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ kullaniciId }),
+          }
+        );
+
+        if (!response.ok) throw new Error("Silme başarısız");
+
+        alert("Yorum silindi");
+        await yorumlariGetir();
+      } catch (error) {
+        console.error("Yorum silinemedi:", error.message);
+        alert("Yorum silinemedi.");
+      }
+    };
+
     const yeniYorumObj = {
       kategori: seciliKategori,
       icerik: yeniYorum.trim(),
@@ -295,6 +323,16 @@ const Home = () => {
                 <div className="entry-content">
                   <p className="entry-text">{entry.icerik}</p>
                 </div>
+                {entry.kullaniciId === kullaniciId && (
+                  <div className="entry-actions">
+                    <button
+                      className="delete-button"
+                      onClick={() => yorumSil(entry.id)}
+                    >
+                      Yorumu Sil
+                    </button>
+                  </div>
+                )}
               </div>
             ))
           ) : (
