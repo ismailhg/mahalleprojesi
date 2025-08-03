@@ -121,8 +121,8 @@ const Home = () => {
       await yorumlariGetir();
       setYeniYorum("");
       setKonum({ ilId: "", ilceId: "", mahalleId: "" });
-      setSeciliKategori("market");
-      setAktifKategori("market");
+      setSeciliKategori("");
+      setAktifKategori("");
     } catch (error) {
       console.error("Yorum gönderilemedi:", error.message);
       alert("Yorum gönderilemedi.");
@@ -322,7 +322,7 @@ const Home = () => {
                   <p className="entry-text">{entry.icerik}</p>
                 </div>
                 {entry.kullaniciId === kullaniciId && (
-                  <div className="entry-actions">
+                  <div className="delete-container">
                     <button
                       className="delete-button"
                       onClick={() => yorumSil(entry.id)}
