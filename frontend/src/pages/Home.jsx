@@ -94,34 +94,6 @@ const Home = () => {
       return alert("Lütfen tüm alanları doldurun.");
     }
 
-    const yorumSil = async (yorumId) => {
-      const onay = window.confirm(
-        "Bu yorumu silmek istediğinize emin misiniz?"
-      );
-      if (!onay) return;
-
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/comments/${yorumId}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ kullaniciId }),
-          }
-        );
-
-        if (!response.ok) throw new Error("Silme başarısız");
-
-        alert("Yorum silindi");
-        await yorumlariGetir();
-      } catch (error) {
-        console.error("Yorum silinemedi:", error.message);
-        alert("Yorum silinemedi.");
-      }
-    };
-
     const yeniYorumObj = {
       kategori: seciliKategori,
       icerik: yeniYorum.trim(),
@@ -154,6 +126,32 @@ const Home = () => {
     } catch (error) {
       console.error("Yorum gönderilemedi:", error.message);
       alert("Yorum gönderilemedi.");
+    }
+  };
+
+  const yorumSil = async (yorumId) => {
+    const onay = window.confirm("Bu yorumu silmek istediğinize emin misiniz?");
+    if (!onay) return;
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/comments/${yorumId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ kullaniciId }),
+        }
+      );
+
+      if (!response.ok) throw new Error("Silme başarısız");
+
+      alert("Yorum silindi");
+      await yorumlariGetir();
+    } catch (error) {
+      console.error("Yorum silinemedi:", error.message);
+      alert("Yorum silinemedi.");
     }
   };
 
