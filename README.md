@@ -7,7 +7,7 @@ The goal is to help users make more informed decisions about their surroundings 
 
 - Location selection by province, district, and neighborhood
 - Post and filter comments based on categories
-- "My Neighborhood" page to view comments only from your own area
+- "Mahallem" page to view comments only from your own area
 - User registration, login, and profile management
 - Secure password reset and session management
 
