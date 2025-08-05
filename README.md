@@ -37,6 +37,6 @@ Mahallem, kullanıcıların yaşadıkları il, ilçe ve mahalleler hakkında yor
 ## 📬 İletişim
 
 Geliştirici: **İsmail Hakkı Gündoğdu**  
-📧 Mail: ismailgundogdu.dev@gmail.com  
+📧 Mail: ismailhgndgd@gmail.com 
 💼 GitHub: [github.com/ismailhg](https://github.com/ismailhg)  
 🔗 LinkedIn: [linkedin.com/in/ismailhakkigundogdu](https://linkedin.com/in/ismailhakkigundogdy)
