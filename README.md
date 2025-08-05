@@ -1,4 +1,4 @@
-<img src="frontend/src/components/mahallelogo.png" alt="Mahallem Logo" width="500" />
+<img src="frontend/src/components/mahallelogo.png" alt="Mahallem Logo" width="300" />
 
 
 Mahallem, kullanıcıların yaşadıkları il, ilçe ve mahalleler hakkında yorum yapabildiği, diğer mahalle sakinlerinin görüşlerini okuyabildiği bir topluluk platformudur. Amacımız, yaşadığınız çevreyle ilgili daha bilinçli kararlar alabilmenizi sağlamak ve mahalle kültürünü dijital ortamda güçlendirmektir.
