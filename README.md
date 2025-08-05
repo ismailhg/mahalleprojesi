@@ -46,6 +46,6 @@ The goal is to help users make more informed decisions about their surroundings 
 Developer: **İsmail Hakkı Gündoğdu**  
 📧 Email: ismailhgndgd@gmail.com  
 💼 GitHub: [github.com/ismailhg](https://github.com/ismailhg)  
-🔗 LinkedIn: [linkedin.com/in/ismailhg](https://linkedin.com/in/ismailhg)
+🔗 LinkedIn: [linkedin.com/in/ismailhakkigundogdu](https://linkedin.com/in/ismailhakkigundogdu)
 
 
