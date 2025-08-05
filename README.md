@@ -1,4 +1,5 @@
-# 🏘️ Mahallem
+<img src="frontend/public/logo192.png" alt="Mahallem Logo" width="200" />
+
 
 Mahallem, kullanıcıların yaşadıkları il, ilçe ve mahalleler hakkında yorum yapabildiği, diğer mahalle sakinlerinin görüşlerini okuyabildiği bir topluluk platformudur. Amacımız, yaşadığınız çevreyle ilgili daha bilinçli kararlar alabilmenizi sağlamak ve mahalle kültürünü dijital ortamda güçlendirmektir.
 
